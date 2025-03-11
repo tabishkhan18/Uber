@@ -1,33 +1,68 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { CaptainDataContext } from '../context/CaptainContext';
+import axios from 'axios'
+
 import { FaTaxi } from "react-icons/fa";
 
 
+
 const CaptainSignUp = () => {
+
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [vehicleColor, setVehicleColor] = useState('')
+  const [vehiclePlate, setVehiclePlate] = useState('')
+  const [vehicleCapacity, setVehicleCapacity] = useState('')
+  const [vehicleType, setVehicleType] = useState('')
+
+
+
+
   const [captainData, setCaptainData] = useState({})
 
-  const handleSubmit = (e) => {
+  const { captain, setCaptain } = React.useContext(CaptainDataContext)
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setCaptainData(
+    const captainData =
       {
-        fullName:{
+        fullName: {
           firstName: firstName,
           lastName: lastName,
         },
         email: email,
-        password: password
+        password: password,
+        vehicle: {
+          color: vehicleColor,
+          plate: vehiclePlate,
+          capacity: vehicleCapacity,
+          vehicleType: vehicleType
+        }
       }
-    )
+    
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
+
+    if (response.status === 201) {
+      const data = response.data
+      setCaptain(data.captain)
+      localStorage.setItem('token', data.token)
+      navigate('/captains/home')
+    }
 
     setFirstName('')
     setLastName('')
     setEmail('')
     setPassword('')
+    setVehicleColor('')
+    setVehiclePlate('')
+    setVehicleCapacity('')
+    setVehicleType('')
   }
 
 
@@ -36,7 +71,7 @@ const CaptainSignUp = () => {
       <div>
         <div className='flex pt-8 w-full justify-between items-center'>
           <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
-          <FaTaxi  className='me-5' size={40} />
+          <FaTaxi className='me-5' size={40} />
         </div>
         <form onSubmit={handleSubmit} className='p-5'>
           <h1 className="text-base my-2">What is your full name?</h1>
@@ -64,7 +99,7 @@ const CaptainSignUp = () => {
 
           <h1 className="text-base my-2">What is your email?</h1>
           <input
-            className="bg-neutral-200 my-2 p-3 w-full rounded"
+            className="bg-neutral-200 my-2 p-3 w-full rounded placeholder:text-sm"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -73,14 +108,69 @@ const CaptainSignUp = () => {
           />
           <h1 className="text-base my-2">Create a password</h1>
           <input
-            className="bg-neutral-200 my-2 p-3 w-full rounded"
+            className="bg-neutral-200 my-2 p-3 w-full rounded placeholder:text-sm"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             placeholder="Password"
           />
-          <button className='my-5 bg-black w-full py-2 text-lg font-medium text-white  rounded' >Login</button>
+
+
+
+          <h3 className='text-base mt-4 mb-2'>Vehicle Information</h3>
+          <div className='flex gap-4 mb-7'>
+            <input
+              required
+              className='bg-neutral-200 w-1/2 rounded p-3 placeholder:text-sm'
+              type="text"
+              placeholder='Vehicle Color'
+              value={vehicleColor}
+              onChange={(e) => {
+                setVehicleColor(e.target.value)
+              }}
+            />
+            <input
+              required
+              className='bg-neutral-200 w-1/2 rounded p-3 placeholder:text-sm'
+              type="text"
+              placeholder='Vehicle Plate'
+              value={vehiclePlate}
+              onChange={(e) => {
+                setVehiclePlate(e.target.value)
+              }}
+            />
+          </div>
+          <div className='flex gap-4 mb-7'>
+            <input
+              required
+              className='bg-neutral-200 w-1/2 rounded p-3 placeholder:text-sm'
+              type="number"
+              placeholder='Vehicle Capacity'
+              value={vehicleCapacity}
+              onChange={(e) => {
+                setVehicleCapacity(e.target.value)
+              }}
+            />
+            <select
+              required
+              className='bg-neutral-200 w-1/2 rounded p-3 placeholder:text-sm'
+              value={vehicleType}
+              onChange={(e) => {
+                setVehicleType(e.target.value)
+              }}
+            >
+              <option value="" disabled>Vehicle Type</option>
+              <option value="car">Car</option>
+              <option value="motorcycle">Motorcycle</option>
+              <option value="auto">Auto</option>
+            </select>
+          </div>
+
+
+
+
+          <button className='my-5 bg-black w-full py-2 text-lg font-medium text-white  rounded' >Create Account</button>
         </form>
         <p className='px-5 text-sm'>Already have an account? <Link to='/captains/login' className='text-blue-500'>Login here</Link></p>
       </div>
