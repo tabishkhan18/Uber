@@ -15,13 +15,14 @@ const CaptainSignUp = () => {
     e.preventDefault()
     setCaptainData(
       {
-        firstName: firstName,
-        lastName: lastName,
+        fullName:{
+          firstName: firstName,
+          lastName: lastName,
+        },
         email: email,
         password: password
       }
     )
-    // console.log(captainData)
 
     setFirstName('')
     setLastName('')
@@ -61,7 +62,7 @@ const CaptainSignUp = () => {
           </div>
 
 
-          <h1 className="text-base my-2">What is your email</h1>
+          <h1 className="text-base my-2">What is your email?</h1>
           <input
             className="bg-neutral-200 my-2 p-3 w-full rounded"
             type="email"
@@ -70,7 +71,7 @@ const CaptainSignUp = () => {
             required
             placeholder="yourname@email.com"
           />
-          <h1 className="text-base my-2">Enter Password</h1>
+          <h1 className="text-base my-2">Create a password</h1>
           <input
             className="bg-neutral-200 my-2 p-3 w-full rounded"
             type="password"
@@ -81,7 +82,7 @@ const CaptainSignUp = () => {
           />
           <button className='my-5 bg-black w-full py-2 text-lg font-medium text-white  rounded' >Login</button>
         </form>
-        <p className='px-5 text-sm'>Already have an account? <Link to='/captain-login' className='text-blue-500'>Login here</Link></p>
+        <p className='px-5 text-sm'>Already have an account? <Link to='/captains/login' className='text-blue-500'>Login here</Link></p>
       </div>
       <div className='p-5'>
         <p className='text-[10px] text-neutral-500'>By proceeding, you consent to get calls, WhatsApp or SMS messages, including by automated means, from Uber and its affiliates to number provided.</p>

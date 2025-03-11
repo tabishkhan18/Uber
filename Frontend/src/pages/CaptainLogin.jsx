@@ -16,7 +16,6 @@ const CaptainLogin = () => {
         password: password
       }
     )
-    // console.log(captainData)
 
     setEmail('')
     setPassword('')
@@ -30,7 +29,7 @@ const CaptainLogin = () => {
           <FaTaxi className='me-5' size={40} />
         </div>
         <form onSubmit={handleSubmit} className='p-5'>
-          <h1 className="text-base my-2">What is your email</h1>
+          <h1 className="text-base my-2">Enter email</h1>
           <input
             className="bg-neutral-200 my-2 p-3 w-full rounded"
             type="email"
@@ -39,7 +38,7 @@ const CaptainLogin = () => {
             required
             placeholder="yourname@email.com"
           />
-          <h1 className="text-base my-2">Enter Password</h1>
+          <h1 className="text-base my-2">Enter password</h1>
           <input
             className="bg-neutral-200 my-2 p-3 w-full rounded"
             type="password"
@@ -50,11 +49,11 @@ const CaptainLogin = () => {
           />
           <button className='my-5 bg-black w-full py-2 text-lg font-medium text-white  rounded' >Login</button>
         </form>
-        <p className='px-5 text-sm'>Join as Captain? <Link to='/captain-signup' className='text-blue-500'>Create New Account</Link></p>
+        <p className='px-5 text-sm'>Join as Captain? <Link to='/captains/register' className='text-blue-500'>Create New Account</Link></p>
       </div>
       <div className='px-5'>
-        <Link to="/user-login" className='my-5 flex justify-center bg-blue-700 w-full py-2 text-lg font-medium text-white  rounded'>
-          User Login
+        <Link to="/users/login" className='my-5 flex justify-center bg-blue-700 w-full py-2 text-lg font-medium text-white  rounded'>
+          Login as User
         </Link>
       </div>
     </div>

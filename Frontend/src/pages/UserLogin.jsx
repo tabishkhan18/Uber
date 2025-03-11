@@ -1,6 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { UserDataContext } from '../context/UserContext';
+import axios from 'axios';
+
+
+
 import { FaCircleUser } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+
+
 
 const UserLogin = () => {
 
@@ -8,15 +15,27 @@ const UserLogin = () => {
   const [password, setPassword] = useState('')
   const [userData, setUserData] = useState({})
 
-  const handleSubmit = (e) => {
+  const { user, setUser } = useContext(UserDataContext)
+  const navigate = useNavigate()
+  
+  
+  
+  
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setUserData(
-      {
-        email: email,
-        password: password
-      }
-    )
-    // console.log(userData)
+    const userData = {
+      email: email,
+      password: password
+    }
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData) 
+    
+    if (response.status === 200) {
+      const data = response.data
+      setUser(data.user)
+      localStorage.setItem('token', data.token)
+      navigate('/home')
+    }
+
 
     setEmail('')
     setPassword('')
@@ -30,7 +49,7 @@ const UserLogin = () => {
           <FaCircleUser className='me-5' size={40} />
         </div>
         <form onSubmit={handleSubmit} className='p-5'>
-          <h1 className="text-base my-2">What is your email</h1>
+          <h1 className="text-base my-2">Enter email</h1>
           <input
             className="bg-neutral-200 my-2 p-3 w-full rounded"
             type="email"
@@ -39,7 +58,7 @@ const UserLogin = () => {
             required
             placeholder="yourname@email.com"
           />
-          <h1 className="text-base my-2">Enter Password</h1>
+          <h1 className="text-base my-2">Enter password</h1>
           <input
             className="bg-neutral-200 my-2 p-3 w-full rounded"
             type="password"
@@ -50,10 +69,10 @@ const UserLogin = () => {
           />
           <button className='my-5 bg-black w-full py-2 text-lg font-medium text-white  rounded' >Login</button>
         </form>
-        <p className='px-5 text-sm'>New here? <Link to='/user-signup' className='text-blue-500'>Create New Account</Link></p>
+        <p className='px-5 text-sm'>New here? <Link to='/users/register' className='text-blue-500'>Create New Account</Link></p>
       </div>
       <div className='px-5'>
-        <Link to="/captain-login" className='my-5 flex justify-center bg-orange-700 w-full py-2 text-lg font-medium text-white  rounded'>
+        <Link to="/captains/login" className='my-5 flex justify-center bg-orange-700 w-full py-2 text-lg font-medium text-white  rounded'>
           Login as Captain
         </Link>
       </div>
