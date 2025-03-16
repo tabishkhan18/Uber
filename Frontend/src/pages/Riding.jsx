@@ -1,15 +1,21 @@
 import React from 'react'
-import { IoLocation } from 'react-icons/io5';
 import { MdMyLocation } from "react-icons/md";
 import { IoMdCash } from "react-icons/io";
+import { AiFillHome } from "react-icons/ai";
+import { Link } from 'react-router-dom'
 
 const Riding = () => {
     return (
-        <div className='w-full h-screen flex flex-col'>
+        <div className='w-full relative h-screen flex flex-col'>
+            <div className=''>
+                <img className='w-40 absolute top-8' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+                <Link to='/users/home' className='home absolute top-12 right-5 bg-white p-2 rounded-full'>
+                    <AiFillHome size={25} />
+                </Link>
+            </div>
             <div className='h-1/2'>
                 <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
             </div>
-
             <div className=''>
                 <div className="flex justify-between items-center px-5 py-2">
                     <img className='w-40' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" alt="" />
