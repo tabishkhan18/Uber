@@ -11,7 +11,7 @@ const CaptainDetails = () => {
             <div className="flex justify-between items-center px-5 py-2">
                 <div className='flex items-center gap-2'>
                     <img className='w-12 object-cover rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ZT8j1Kg9SVKlDrZaq1E6_VtInBA5CO98I3Q8dr_ydEcfv0a3_5ViL4fLO0j8Pu3hhOQ&usqp=CAU" alt="" />
-                    <h1 className='font-medium text-xl'>Tabish</h1>
+                    <h1 className='font-medium text-xl'>Captain</h1>
                 </div>
                 <div className="text-end w-full">
                     <h1 className='font-medium text-xl'>$110.26</h1>

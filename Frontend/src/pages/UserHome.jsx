@@ -7,6 +7,8 @@ import VehicleSuggestions from '../components/VehicleSuggestions';
 import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
+import { Link } from 'react-router-dom';
+import { BiLogOut } from "react-icons/bi";
 
 const UserHome = () => {
 
@@ -112,10 +114,13 @@ const UserHome = () => {
   return (
     <div>
       <div className="h-screen relative overflow-hidden">
-        <img className='w-40 absolute top-8' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
-        <div onClick={() => {
-          setVehiclePanel(false)
-        }} className='h-screen w-screen'>
+        <div className=''>
+          <img className='w-40 absolute top-8' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+          <Link to='/users/logout' className='home absolute top-12 right-5 bg-white p-2 rounded-full'>
+            <BiLogOut size={25} />
+          </Link>
+        </div>
+        <div className='h-3/5'>
           <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
         </div>
         <div className='h-screen absolute bottom-0 right-0 w-full flex flex-col justify-end '>

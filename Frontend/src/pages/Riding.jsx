@@ -20,8 +20,8 @@ const Riding = () => {
                 <div className="flex justify-between items-center px-5 py-2">
                     <img className='w-40' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" alt="" />
                     <div className="text-end w-full">
-                        <h1 className='font-medium text-lg'>Tabish</h1>
-                        <h1 className='text-xl font-semibold'>UP 30 Y 1234</h1>
+                        <h1 className='font-medium text-lg'>Captain</h1>
+                        <h1 className='text-xl font-semibold'>AB 12 C 1234</h1>
                         <h1 className='text-neutral-500 font-medium'>Honda City</h1>
                     </div>
                 </div>

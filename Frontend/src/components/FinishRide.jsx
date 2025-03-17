@@ -1,27 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { IoIosArrowUp, IoMdCash } from 'react-icons/io'
 import { IoLocation } from 'react-icons/io5'
 import { MdMyLocation } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
-const ConfirmRidePopup = (props) => {
-
-    const [otp, setOtp] = useState('')
-
-    const submitHandler = (e) => {
-        e.preventDefault()
-
-    }
-
-
-
+const FinishRide = (props) => {
     return (
-        <div className='w-full bg-red-30 flex flex-col'>
+        <div className='w-full h-screen py-5 bg-red-30 flex flex-col'>
             <div className='flex justify-between items-center px-2'>
-                <h1 className='text-2xl font-semibold'>Confirm ride to start!</h1>
+                <h1 className='text-2xl font-semibold'>Finish Ride!</h1>
                 <IoIosArrowUp
                     onClick={() => {
-                        props.setConfirmRidePopupPanel(false)
+                        props.setFinishRidePanel(false)
                     }}
                     className="rotate-180 my-5"
                     size={30}
@@ -33,7 +23,7 @@ const ConfirmRidePopup = (props) => {
                     <h1 className='font-medium text-lg'>Random guy</h1>
                 </div>
                 <div className="text-end w-full">
-                    <h1 className='font-medium text-lg'>12 KMs</h1>
+                    <h1 className='font-medium text-lg'>0 KMs</h1>
                 </div>
             </div>
             <div className="py-5 w-full divide-y divide-neutral-300">
@@ -64,38 +54,15 @@ const ConfirmRidePopup = (props) => {
                         <h1 className='font-semibold text-sm text-neutral-500'>Cash, Online</h1>
                     </div>
                 </div>
-
             </div>
-            <form onSubmit={(e) => {
-                submitHandler(e)
-            }}>
-                <input
-                    type="text"
-                    name="otp"
-                    value={otp}
-                    onChange={(e)=>{
-                        setOtp(e.target.value)
-                    }}
-                    className='bg-neutral-200 my-5 p-3 placeholder:text-center text-center w-full rounded'
-                    placeholder='* * * *'
-                    maxLength={4}
-
-                />
-                <div className="flex gap-4 mt-5">
-                    <button onClick={() => {
-                        props.setConfirmRidePopupPanel(false)
-                        props.setRidePopupPanel(false)
-                    }} className='w-1/2 flex justify-center bg-red-500  py-2 text-lg text-white font-medium  rounded'>
-                        Cancel
-                    </button>
-                    <Link to='/captains/riding' className='w-1/2 flex justify-center bg-green-600  py-2 text-lg font-medium text-white  rounded'>
-                        Confirm
-                    </Link>
-                </div>
-            </form>
-
+            <div className="flex flex-col gap-4 mt-5">
+                <Link to='/captains/home' className='w-full flex justify-center bg-green-600  py-2 text-lg font-medium text-white  rounded'>
+                    Finish Ride
+                </Link>
+                <p className='text-xs mt-10 text-red-500'>Before clicking on <span className='text-black'>Finish Ride</span> button, make sure that you recieve the payment.</p>
+            </div>
         </div>
     )
 }
 
-export default ConfirmRidePopup
+export default FinishRide

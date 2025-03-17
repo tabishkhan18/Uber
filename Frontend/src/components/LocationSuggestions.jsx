@@ -3,10 +3,16 @@ import { IoLocation } from "react-icons/io5";
 const LocationSuggestions = (props) => {
 
     const locations = [
+        
         {
-            name: 'Awadh Restaurant',
-            address: 'Near bus stand, Maulaganj',
-            fullAddress: ' Maulaganj, Shahabad, Hardoi 241124'
+            name: 'Phoenix Palassio',
+            address: 'Amar shaheed path',
+            fullAddress: 'Gomti nagar, Lucknow 226010'
+        },
+        {
+            name: 'Charbagh metro station',
+            address: 'Near charbagh railway station',
+            fullAddress: 'Charbagh, Lucknow 226004'
         },
         {
             name: 'Phoenix Palassio',
@@ -19,25 +25,16 @@ const LocationSuggestions = (props) => {
             fullAddress: 'Charbagh, Lucknow 226004'
         },
         {
-            name: 'Charbagh metro station',
-            address: 'Near charbagh railway station',
-            fullAddress: 'Charbagh, Lucknow 226004'
+            name: 'Phoenix Palassio',
+            address: 'Amar shaheed path',
+            fullAddress: 'Gomti nagar, Lucknow 226010'
         },
         {
             name: 'Charbagh metro station',
             address: 'Near charbagh railway station',
             fullAddress: 'Charbagh, Lucknow 226004'
         },
-        {
-            name: 'Charbagh metro station',
-            address: 'Near charbagh railway station',
-            fullAddress: 'Charbagh, Lucknow 226004'
-        },
-        {
-            name: 'Charbagh metro station',
-            address: 'Near charbagh railway station',
-            fullAddress: 'Charbagh, Lucknow 226004'
-        },
+        
     ]
 
 
