@@ -8,7 +8,6 @@ import { IoMdCash } from "react-icons/io";
 const ConfirmRide = (props) => {
     return (
         <div className='w-full h-screen flex flex-col '>
-
             <div className='flex justify-between items-center p-5'>
                 <h1 className='text-2xl font-semibold'>Confirm your ride !</h1>
                 <IoIosArrowUp
