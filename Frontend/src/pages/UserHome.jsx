@@ -10,10 +10,16 @@ import WaitingForDriver from '../components/WaitingForDriver';
 import { Link } from 'react-router-dom';
 import { BiLogOut } from "react-icons/bi";
 
+
 const UserHome = () => {
 
   const [pickup, setPickup] = useState('');
   const [destination, setDestination] = useState('');
+
+  const [pickupSuggestions, setPickupSuggestions] = useState([])
+  const [destinationSuggestions, setDestinationSuggestions] = useState([])
+  const [activeField, setActiveField] = useState(null)
+
   const [locationPanel, setLocationPanel] = useState(false);
   const [vehiclePanel, setVehiclePanel] = useState(false);
   const [confirmRide, setConfirmRide] = useState(false)
@@ -27,6 +33,58 @@ const UserHome = () => {
   const confirmRideRef = useRef(null)
   const vehicleFoundRef = useRef(null)
   const waitingForDriverRef = useRef(null)
+
+
+
+  const handlePickupChange = async (e) => {
+    setPickup(e.target.value)
+    setActiveField('pickup');
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          input: e.target.value
+        }),
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      // console.log(data)
+      console.log(data.map(item => item.text))
+      setPickupSuggestions(data.map(item => item.text))
+    } catch (error) {
+      console.error("Error fetching destination suggestions:", error);
+    }
+  }
+
+  const handleDestinationChange = async (e) => {
+    setDestination(e.target.value);
+    setActiveField('destination');
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ input: e.target.value })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json(); // Parse JSON response
+      console.log(data.map(item => item.text))
+      setDestinationSuggestions(data.map(item => item.text));
+    } catch (error) {
+      console.error("Error fetching destination suggestions:", error);
+    }
+  };
 
 
   const submitHandler = (e) => {
@@ -124,7 +182,7 @@ const UserHome = () => {
           <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
         </div>
         <div className='h-screen absolute bottom-0 right-0 w-full flex flex-col justify-end '>
-          <div className='bg-white p-5 flex flex-col gap-5 relative h-[35%] rounded-xl'>
+          <div className='bg-white p-5 flex flex-col gap-5 relative h-[35%] rounded-t-xl'>
             <div className='flex justify-between items-center'>
               <h1 className='text-2xl font-semibold'>Find a trip</h1>
               <IoIosArrowUp
@@ -142,11 +200,12 @@ const UserHome = () => {
               <div className="line bg-neutral-500 h-20 w-[3px] rounded-full absolute left-10 bottom-16"></div>
               <input
                 value={pickup}
+
                 onClick={() => {
                   setLocationPanel(true)
                   setLocationPanelArrow(true)
                 }}
-                onChange={e => setPickup(e.target.value)}
+                onChange={handlePickupChange}
                 className='bg-neutral-200 px-10 py-3 rounded w-full'
                 type="text"
                 placeholder='Add a pick-up location'
@@ -157,7 +216,7 @@ const UserHome = () => {
                   setLocationPanel(true)
                   setLocationPanelArrow(true)
                 }}
-                onChange={e => setDestination(e.target.value)}
+                onChange={handleDestinationChange}
                 className='bg-neutral-200 px-10 py-3 rounded w-full'
                 type="text"
                 placeholder='Enter your destination'
@@ -165,7 +224,16 @@ const UserHome = () => {
             </form>
           </div>
           <div ref={locationPanelRef} className='h-[0%] bg-white overflow-y-scroll'>
-            <LocationSuggestions setLocationPanel={setLocationPanel} setVehiclePanel={setVehiclePanel} />
+            <LocationSuggestions
+              suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
+              setLocationPanel={setLocationPanel}
+              setVehiclePanel={setVehiclePanel}
+              setPickup={setPickup}
+              setDestination={setDestination}
+              activeField={activeField}
+              setLocationPanelArrow={setLocationPanelArrow}
+              locationPanelArrow={locationPanelArrow}
+            />
           </div>
         </div>
 
