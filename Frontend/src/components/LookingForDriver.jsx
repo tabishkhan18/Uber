@@ -14,7 +14,7 @@ const LookingForDriver = (props) => {
                 <h1 className='text-2xl font-semibold'>Looking for a driver...!</h1>
                 <IoIosArrowUp
                     onClick={() => {
-                        props.setVehicleFound(!props.vehicleFound)
+                        props.setVehicleFound(false)
                     }}
                     className="rotate-180 my-5"
                     size={30}
@@ -29,8 +29,10 @@ const LookingForDriver = (props) => {
                         <IoLocation size={25} />
                     </div>
                     <div className="location">
-                        <h1 className='font-semibold text-lg'>Charbagh metro station</h1>
-                        <h1 className='font-semibold text-sm text-neutral-500'>Near charbagh railway station, lucknow</h1>
+                        <h1 className='font-medium'>
+                            {props.pickup.split(" ").length > 8
+                                ? props.pickup.split(" ").slice(0, 8).join(" ") + "..."
+                                : props.pickup}</h1>
                     </div>
                 </div>
                 <div className='flex gap-5 m-2 py-2 px-5  items-center'>
@@ -38,15 +40,17 @@ const LookingForDriver = (props) => {
                         <MdMyLocation size={25} />
                     </div>
                     <div className="location">
-                        <h1 className='font-semibold text-lg'>Phoenix Palassio</h1>
-                        <h1 className='font-semibold text-sm text-neutral-500'>Amar shaheed path, Gomti nagar, Lucknow</h1>
+                        <h1 className='font-medium'>
+                            {props.destination.split(" ").length > 8
+                                ? props.destination.split(" ").slice(0, 8).join(" ") + "..."
+                                : props.destination}</h1>
                     </div>
                 </div><div className='flex  gap-5 m-2 py-2 px-5  items-center'>
                     <div className="icon bg-neutral-200 p-2 rounded-full">
                         <IoMdCash size={25} />
                     </div>
                     <div className="location">
-                        <h1 className='font-semibold text-lg'>$3.11</h1>
+                        <h1 className='font-medium text-lg'>₹{props.fare[props.vehicleType]}</h1>
                         <h1 className='font-semibold text-sm text-neutral-500'>Cash, Online</h1>
                     </div>
                 </div>

@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { BiLogOut } from 'react-icons/bi'
 import { IoIosArrowUp } from 'react-icons/io'
-import { Link } from 'react-router-dom'
+
+import { Link, useLocation } from 'react-router-dom'
+
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
+
 import FinishRide from '../components/FinishRide'
 
 
@@ -12,6 +15,9 @@ const CaptainRiding = () => {
 
     const [finishRidePanel, setFinishRidePanel] = useState(false)
     const finishRidePanelRef = useRef(null)
+    const location = useLocation()
+    const rideData = location.state?.ride
+
 
     useGSAP(function () {
         if (finishRidePanel) {
@@ -41,7 +47,7 @@ const CaptainRiding = () => {
             </div>
 
 
-            <div onClick={()=>{
+            <div onClick={() => {
                 setFinishRidePanel(true)
             }} className='py-5 flex flex-col justify-between items-center bg-yellow-20 h-1/5'>
                 <IoIosArrowUp
@@ -59,6 +65,7 @@ const CaptainRiding = () => {
 
             <div ref={finishRidePanelRef} className='fixed w-full z-10 bottom-0 bg-white translate-y-full px-3 py-5'>
                 <FinishRide
+                    ride={rideData}
                     setFinishRidePanel={setFinishRidePanel}
                 />
             </div>

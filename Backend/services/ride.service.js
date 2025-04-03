@@ -9,7 +9,8 @@ async function getFare(pickup, destination) {
     }
 
     const distanceTime = await mapService.getDistanceTime(pickup, destination);
-
+    
+    
     const baseFare = {
         auto: 30,
         car: 50,
@@ -27,8 +28,8 @@ async function getFare(pickup, destination) {
         car: 3,
         moto: 1.5
     };
-
-
+    
+    
 
     const fare = {
         auto: Math.round(baseFare.auto + ((distanceTime.distanceMeters / 1000) * perKmRate.auto) + ((distanceTime.duration / 60) * perMinuteRate.auto)),
@@ -115,7 +116,7 @@ module.exports.startRide = async ({ rideId, otp, captain }) => {
     const ride = await Ride.findOne({
         _id: rideId
     }).populate('user').populate('captain').select('+otp');
-
+ 
     if (!ride) {
         throw new Error('Ride not found');
     }

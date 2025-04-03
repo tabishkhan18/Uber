@@ -102,7 +102,6 @@ module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
 
     // radius in km
 
-
     const captains = await Captain.find({
         location: {
             $geoWithin: {

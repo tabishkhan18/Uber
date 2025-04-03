@@ -20,7 +20,7 @@ const CaptainRidePopup = (props) => {
             <div className="flex bg-neutral-100 rounded-lg justify-between items-center px-2 py-2">
                 <div className='flex w-full items-center gap-2'>
                     <img className='w-12 object-cover rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4ZT8j1Kg9SVKlDrZaq1E6_VtInBA5CO98I3Q8dr_ydEcfv0a3_5ViL4fLO0j8Pu3hhOQ&usqp=CAU" alt="" />
-                    <h1 className='font-medium text-lg'>Random guy</h1>
+                    <h1 className='font-medium text-lg'>{props.ride?.user.fullName.firstName}</h1>
                 </div>
                 <div className="text-end w-full">
                     <h1 className='font-medium text-lg'>12 KMs</h1>
@@ -32,8 +32,7 @@ const CaptainRidePopup = (props) => {
                         <IoLocation size={25} />
                     </div>
                     <div className="location">
-                        <h1 className='font-semibold text-lg'>Charbagh metro station</h1>
-                        <h1 className='font-semibold text-sm text-neutral-500'>Near charbagh railway station, lucknow</h1>
+                        <h1 className='font-semibold'>{props.ride?.pickup}</h1>
                     </div>
                 </div>
                 <div className='flex gap-5 m-2 p-2 items-center'>
@@ -41,8 +40,7 @@ const CaptainRidePopup = (props) => {
                         <MdMyLocation size={25} />
                     </div>
                     <div className="location">
-                        <h1 className='font-semibold text-lg'>Phoenix Palassio</h1>
-                        <h1 className='font-semibold text-sm text-neutral-500'>Amar shaheed path, Gomti nagar, Lucknow</h1>
+                        <h1 className='font-semibold'>{props.ride?.destination}</h1>
                     </div>
                 </div>
                 <div className='flex  gap-5 m-2 p-2 items-center'>
@@ -50,7 +48,7 @@ const CaptainRidePopup = (props) => {
                         <IoMdCash size={25} />
                     </div>
                     <div className="location">
-                        <h1 className='font-semibold text-lg'>$3.11</h1>
+                        <h1 className='font-semibold text-lg'>₹{props.ride?.fare}</h1>
                         <h1 className='font-semibold text-sm text-neutral-500'>Cash, Online</h1>
                     </div>
                 </div>
@@ -64,6 +62,7 @@ const CaptainRidePopup = (props) => {
                 </button>
                 <button onClick={() => {
                     props.setConfirmRidePopupPanel(true)
+                    props.confirmRide()
                 }} className='w-1/2 flex justify-center bg-black  py-2 text-lg font-medium text-white  rounded'>
                     Accept
                 </button>
