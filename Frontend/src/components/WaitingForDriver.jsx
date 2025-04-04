@@ -15,11 +15,11 @@ const WaitingForDriver = (props) => {
                 size={30}
             /></h5>
             <div className="flex justify-between items-center p-5">
-                <img className='w-40' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" alt="" />
+                <img className='w-40' src={props.vehicleImage} alt="" />
                 <div className="text-end w-full">
                     <h1 className='font-medium text-lg'>{props.ride?.captain.fullName.firstName}</h1>
                     <h1 className='text-xl font-semibold'>{props.ride?.captain.vehicle.plate}</h1>
-                    <h1 className='text-neutral-500 font-medium'>Honda City</h1>
+                    <h1 className='text-neutral-500 font-medium'>Honda City | Blue</h1>
                 </div>
             </div>
             <div className="py-5 w-full divide-y divide-neutral-300">

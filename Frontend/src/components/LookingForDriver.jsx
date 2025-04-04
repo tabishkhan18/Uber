@@ -21,7 +21,7 @@ const LookingForDriver = (props) => {
                 />
             </div>
             <div className="flex justify-center py-5">
-                <img className='w-56' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" alt="" />
+                <img className='w-56' src={props.vehicleImage} alt="" />
             </div>
             <div className="py-5 w-full divide-y divide-neutral-300">
                 <div className='flex  gap-5 m-2 py-2 px-5  items-center'>

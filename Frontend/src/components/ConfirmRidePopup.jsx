@@ -7,26 +7,35 @@ import { useNavigate } from 'react-router-dom'
 
 const ConfirmRidePopup = (props) => {
 
-    const [ otp, setOtp ] = useState('')
+    const [otp, setOtp] = useState('')
+    const [otpError, setOtpError] = useState('');
     const navigate = useNavigate()
 
     const submitHandler = async (e) => {
         e.preventDefault()
 
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
-            params: {
-                rideId: props.ride._id,
-                otp: otp
-            },
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+                params: {
+                    rideId: props.ride._id,
+                    otp: otp
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
 
-        if (response.status === 200) {
-            props.setConfirmRidePopupPanel(false)
-            props.setRidePopupPanel(false)
-            navigate('/captains/riding', { state: { ride: props.ride } })
+            if (response.status === 200) {
+                props.setConfirmRidePopupPanel(false);
+                props.setRidePopupPanel(false);
+                navigate('/captains/riding', { state: { ride: props.ride } });
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 400) {
+                setOtpError('The OTP entered is incorrect. Please try again.');
+            } else {
+                setOtpError('The OTP entered is incorrect.');
+            }
         }
 
 
@@ -87,7 +96,7 @@ const ConfirmRidePopup = (props) => {
                     type="text"
                     name="otp"
                     value={otp}
-                    onChange={(e)=>{
+                    onChange={(e) => {
                         setOtp(e.target.value)
                     }}
                     className='bg-neutral-200 my-5 p-5 placeholder:text-center text-center w-full rounded placeholder:tracking-[2rem] tracking-[2rem] font-semibold text-lg '
@@ -95,6 +104,9 @@ const ConfirmRidePopup = (props) => {
                     maxLength={4}
 
                 />
+                {otpError && (
+                    <p className="text-red-500 text-center font-medium">{otpError}</p>
+                )}
                 <div className="flex gap-4 mt-5">
                     <button onClick={() => {
                         props.setConfirmRidePopupPanel(false)

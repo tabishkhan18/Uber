@@ -32,7 +32,7 @@ const LocationSuggestions = ({ suggestions, setPickup, setDestination, activeFie
                     );
                 })
             ) : (
-                <p className="text-center text-gray-500">No suggestions found</p>
+                <p className="text-center py-10 text-gray-500">No suggestions found</p>
             )}
         </div>
 

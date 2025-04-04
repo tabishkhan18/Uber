@@ -13,7 +13,7 @@ import LiveTracking from '../components/LiveTracking';
 const Riding = () => {
 
     const location = useLocation()
-    const { ride } = location.state || {}
+    const { ride, vehicleImage } = location.state || {}
 
     const { socket } = useContext(SocketContext)
     const navigate = useNavigate()
@@ -43,11 +43,11 @@ const Riding = () => {
 
             <div className=''>
                 <div className="flex justify-between items-center px-5 py-2">
-                    <img className='w-40' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" alt="" />
+                    <img className='w-40' src={vehicleImage} alt="" />
                     <div className="text-end w-full">
                         <h1 className='font-medium text-lg'>{ride?.captain.fullName.firstName}</h1>
                         <h1 className='text-xl font-semibold'>{ride?.captain.vehicle.plate}</h1>
-                        <h1 className='text-neutral-500 font-medium'>Honda City</h1>
+                        <h1 className='text-neutral-500 font-medium'>Honda City | Blue</h1>
                     </div>
                 </div>
                 <div className=" w-full ">

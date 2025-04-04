@@ -31,6 +31,7 @@ const UserHome = () => {
 
   const [fare, setFare] = useState({})
   const [vehicleType, setVehicleType] = useState(null)
+  const [vehicleImage, setVehicleImage] = useState(null); // New state for vehicle image
   const [ride, setRide] = useState(null)
 
 
@@ -70,7 +71,7 @@ const UserHome = () => {
   socket.on('ride-started', ride => {
     // console.log("ride")
     setWaitingForDriver(false)
-    navigate('/users/riding', { state: { ride } }) // Updated navigate to include ride data
+    navigate('/users/riding', { state: { ride, vehicleImage  } }) // Updated navigate to include ride data
   })
 
 
@@ -260,9 +261,9 @@ const UserHome = () => {
         </div>
         <div className='h-3/5 '>
           {/* <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" /> */}
-          <LiveTracking/>
+          <LiveTracking />
         </div>
-        <div className='h-screen absolute bottom-0 right-0 w-full flex flex-col justify-end '>
+        <div className='h-screen absolute top-0 w-full flex flex-col justify-end '>
           <div className='bg-white p-5 flex flex-col gap-5 relative h-[40%] rounded-t-xl'>
             <div className='flex justify-between items-center'>
               <h1 className='text-2xl font-semibold'>Find a trip</h1>
@@ -305,7 +306,9 @@ const UserHome = () => {
             </form>
             <button
               onClick={findRide}
-              className='flex justify-center items-center bg-black text-white py-3 rounded-lg text-xl'>
+              disabled={!pickup || !destination} // Disable button if either input is empty
+              className={`text-white flex justify-center items-center py-3 rounded-lg text-xl ${!pickup || !destination ? 'bg-neutral-500 cursor-not-allowed' : 'bg-black'
+                }`}>
               Find Ride
             </button>
           </div>
@@ -327,6 +330,7 @@ const UserHome = () => {
             vehiclePanel={vehiclePanel}
             setVehiclePanel={setVehiclePanel}
             setConfirmRide={setConfirmRide}
+            setVehicleImage={setVehicleImage} // Pass the setter function
           />
         </div>
 
@@ -337,10 +341,10 @@ const UserHome = () => {
             destination={destination}
             fare={fare}
             vehicleType={vehicleType}
-
             confirmRide={confirmRide}
             setConfirmRide={setConfirmRide}
             setVehicleFound={setVehicleFound}
+            vehicleImage={vehicleImage} // Pass the image as a prop
           />
 
         </div>
@@ -351,9 +355,9 @@ const UserHome = () => {
             destination={destination}
             fare={fare}
             vehicleType={vehicleType}
-
             vehicleFound={vehicleFound}
             setVehicleFound={setVehicleFound}
+            vehicleImage={vehicleImage} // Pass the image as a prop
           />
         </div>
         <div ref={waitingForDriverRef} className='w-full fixed z-10 bottom-0 rounded-lg translate-y-full  bg-white py-5 h-fit'>
@@ -362,6 +366,7 @@ const UserHome = () => {
             setVehicleFound={setVehicleFound}
             setWaitingForDriver={setWaitingForDriver}
             waitingForDriver={waitingForDriver}
+            vehicleImage={vehicleImage} // Pass the image as a prop
           />
         </div>
 
