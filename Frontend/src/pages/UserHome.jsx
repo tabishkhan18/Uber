@@ -16,6 +16,7 @@ import { BiLogOut } from "react-icons/bi";
 import { SocketContext } from '../context/SocketContext';
 import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import LiveTracking from '../components/LiveTracking';
 
 
 
@@ -67,7 +68,7 @@ const UserHome = () => {
   })
 
   socket.on('ride-started', ride => {
-    console.log("ride")
+    // console.log("ride")
     setWaitingForDriver(false)
     navigate('/users/riding', { state: { ride } }) // Updated navigate to include ride data
   })
@@ -96,7 +97,7 @@ const UserHome = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data.map(item => item.text));
+        // console.log(data.map(item => item.text));
         setPickupSuggestions(data.map(item => item.text));
       } catch (error) {
         console.error("Error fetching destination suggestions:", error);
@@ -130,7 +131,7 @@ const UserHome = () => {
         }
 
         const data = await response.json();
-        console.log(data.map(item => item.text));
+        // console.log(data.map(item => item.text));
         setDestinationSuggestions(data.map(item => item.text));
 
       } catch (error) {
@@ -141,7 +142,7 @@ const UserHome = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('submitted');
+    // console.log('submitted');
   }
 
   useGSAP(function () {
@@ -235,7 +236,6 @@ const UserHome = () => {
     setFare(response.data)
   }
 
-
   const createRide = async () => {
     const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
       pickup,
@@ -246,20 +246,21 @@ const UserHome = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-    console.log(response.data)
+    // console.log(response.data)
   }
 
   return (
     <div>
       <div className="h-screen relative overflow-hidden">
-        <div className=''>
-          <img className='w-40 absolute top-8' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
-          <Link to='/users/logout' className='home absolute top-12 right-5 bg-white p-2 rounded-full'>
+        <div className='flex items-center justify-between'>
+          <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+          <Link to='/users/logout' className='home bg-white p-2 rounded-full'>
             <BiLogOut size={25} />
           </Link>
         </div>
-        <div className='h-3/5'>
-          <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
+        <div className='h-3/5 '>
+          {/* <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" /> */}
+          <LiveTracking/>
         </div>
         <div className='h-screen absolute bottom-0 right-0 w-full flex flex-col justify-end '>
           <div className='bg-white p-5 flex flex-col gap-5 relative h-[40%] rounded-t-xl'>

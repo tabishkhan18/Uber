@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useEffect, useContext } from 'react';
 import { SocketContext } from '../context/SocketContext';
+import LiveTracking from '../components/LiveTracking';
 
 
 const Riding = () => {
@@ -26,15 +27,20 @@ const Riding = () => {
 
     return (
         <div className='w-full relative h-screen flex flex-col'>
-            <div className=''>
-                <img className='w-40 absolute top-8' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
-                <Link to='/users/home' className='home absolute top-12 right-5 bg-white p-2 rounded-full'>
+            <div className='h-1/2'>
+
+            <div className='flex justify-between items-center'>
+                <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+                <Link to='/users/home' className='home bg-white p-2 rounded-full'>
                     <AiFillHome size={25} />
                 </Link>
             </div>
-            <div className='h-1/2'>
-                <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
+            <div className='h-4/5'>
+                {/* <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" /> */}
+                <LiveTracking/>
             </div>
+            </div>
+
             <div className=''>
                 <div className="flex justify-between items-center px-5 py-2">
                     <img className='w-40' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1688398971/assets/29/fbb8b0-75b1-4e2a-8533-3a364e7042fa/original/UberSelect-White.png" alt="" />

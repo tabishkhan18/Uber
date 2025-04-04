@@ -8,6 +8,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 
 import FinishRide from '../components/FinishRide'
+import LiveTracking from '../components/LiveTracking'
 
 
 const CaptainRiding = () => {
@@ -36,14 +37,15 @@ const CaptainRiding = () => {
 
     return (
         <div className='relative h-screen flex flex-col'>
-            <div className=''>
-                <img className='w-40 absolute top-8' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
-                <Link to='/captains/login' className='home absolute top-12 right-5 bg-white p-2 rounded-full'>
+            <div className='flex justify-between items-center'>
+                <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+                <Link to='/captains/login' className='home bg-white p-2 rounded-full'>
                     <BiLogOut size={25} />
                 </Link>
             </div>
             <div className='h-4/5'>
-                <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
+                {/* <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" /> */}
+                <LiveTracking/>
             </div>
 
 
