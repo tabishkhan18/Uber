@@ -30,7 +30,7 @@ const Riding = () => {
             <div className='h-1/2'>
 
             <div className='flex justify-between items-center'>
-                <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+                <img className='w-40' src="/logo.webp" alt="" />
                 <Link to='/users/home' className='home bg-white p-2 rounded-full'>
                     <AiFillHome size={25} />
                 </Link>
@@ -67,7 +67,7 @@ const Riding = () => {
                             <IoMdCash size={25} />
                         </div>
                         <div className="location">
-                            <h1 className='font-semibold text-lg'>${ride?.fare}</h1>
+                            <h1 className='font-semibold text-lg'>₹{ride?.fare}</h1>
                             <h1 className='font-semibold text-sm text-neutral-500'>Cash, Online</h1>
                         </div>
                     </div>

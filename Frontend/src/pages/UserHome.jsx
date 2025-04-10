@@ -2,47 +2,33 @@ import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
 import axios from 'axios'
-
 import LocationSuggestions from '../components/LocationSuggestions';
 import VehicleSuggestions from '../components/VehicleSuggestions';
 import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
-
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoIosArrowUp } from "react-icons/io";
 import { BiLogOut } from "react-icons/bi";
-
 import { SocketContext } from '../context/SocketContext';
 import { UserDataContext } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
 import LiveTracking from '../components/LiveTracking';
 
-
-
-
 const UserHome = () => {
-
   const [pickup, setPickup] = useState('');
   const [destination, setDestination] = useState('');
-
   const [pickupSuggestions, setPickupSuggestions] = useState([])
   const [destinationSuggestions, setDestinationSuggestions] = useState([])
-
   const [fare, setFare] = useState({})
   const [vehicleType, setVehicleType] = useState(null)
-  const [vehicleImage, setVehicleImage] = useState(null); // New state for vehicle image
+  const [vehicleImage, setVehicleImage] = useState(null);
   const [ride, setRide] = useState(null)
-
-
   const [activeField, setActiveField] = useState(null)
-
   const [locationPanel, setLocationPanel] = useState(false);
   const [vehiclePanel, setVehiclePanel] = useState(false);
   const [confirmRide, setConfirmRide] = useState(false)
   const [vehicleFound, setVehicleFound] = useState(false)
   const [waitingForDriver, setWaitingForDriver] = useState(false)
-
   const [locationPanelArrow, setLocationPanelArrow] = useState(false)
 
   const locationPanelRef = useRef(null)
@@ -50,13 +36,23 @@ const UserHome = () => {
   const confirmRideRef = useRef(null)
   const vehicleFoundRef = useRef(null)
   const waitingForDriverRef = useRef(null)
-
   const debounceTimer = useRef(null);
+  const searchRef = useRef(null) // NEW ref for search container
 
   const navigate = useNavigate()
+  const location = useLocation()
   const { socket } = useContext(SocketContext)
   const { user } = useContext(UserDataContext)
 
+  // Set success message if passed in location state
+  const [success, setSuccess] = useState(location.state?.success || '')
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => setSuccess(''), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   useEffect(() => {
     socket.emit("join", { userType: "user", userId: user._id })
@@ -69,12 +65,9 @@ const UserHome = () => {
   })
 
   socket.on('ride-started', ride => {
-    // console.log("ride")
     setWaitingForDriver(false)
-    navigate('/users/riding', { state: { ride, vehicleImage  } }) // Updated navigate to include ride data
+    navigate('/users/riding', { state: { ride, vehicleImage } })
   })
-
-
 
   const handlePickupChange = (e) => {
     setPickup(e.target.value);
@@ -98,7 +91,6 @@ const UserHome = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        // console.log(data.map(item => item.text));
         setPickupSuggestions(data.map(item => item.text));
       } catch (error) {
         console.error("Error fetching destination suggestions:", error);
@@ -110,11 +102,9 @@ const UserHome = () => {
     setDestination(e.target.value);
     setActiveField('destination');
 
-
     if (debounceTimer.current) {
       clearTimeout(debounceTimer.current);
     }
-
 
     debounceTimer.current = setTimeout(async () => {
       try {
@@ -132,7 +122,6 @@ const UserHome = () => {
         }
 
         const data = await response.json();
-        // console.log(data.map(item => item.text));
         setDestinationSuggestions(data.map(item => item.text));
 
       } catch (error) {
@@ -143,13 +132,12 @@ const UserHome = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // console.log('submitted');
   }
 
   useGSAP(function () {
     if (locationPanel) {
       gsap.to(locationPanelRef.current, {
-        height: '65%'
+        height: '100%'
       }
       )
     } else {
@@ -160,6 +148,15 @@ const UserHome = () => {
     }
   }, [locationPanel])
 
+  // NEW: Animate the search container height based on locationPanel state.
+  useGSAP(() => {
+    if (locationPanel) {
+      gsap.to(searchRef.current, { height: '100vh' })
+    } else {
+      // Approximate height for h-3/7 (3/7 of viewport height ≈ 42.86vh)
+      gsap.to(searchRef.current, { height: '42.86vh' })
+    }
+  }, [locationPanel])
 
   useGSAP(function () {
     if (vehiclePanel) {
@@ -175,7 +172,6 @@ const UserHome = () => {
     }
   }, [vehiclePanel])
 
-
   useGSAP(function () {
     if (confirmRide) {
       gsap.to(confirmRideRef.current, {
@@ -189,7 +185,6 @@ const UserHome = () => {
       )
     }
   }, [confirmRide])
-
 
   useGSAP(function () {
     if (vehicleFound) {
@@ -205,8 +200,6 @@ const UserHome = () => {
     }
   }, [vehicleFound])
 
-
-
   useGSAP(function () {
     if (waitingForDriver) {
       gsap.to(waitingForDriverRef.current, {
@@ -220,7 +213,6 @@ const UserHome = () => {
       )
     }
   }, [waitingForDriver])
-
 
   const findRide = async () => {
     setVehiclePanel(true);
@@ -247,24 +239,31 @@ const UserHome = () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-    // console.log(response.data)
   }
 
   return (
-    <div>
+    <div className='relative'>
+      {success && (
+        <div className="fixed top-2 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50">
+          {success}
+        </div>
+      )}
       <div className="h-screen relative overflow-hidden">
         <div className='flex items-center justify-between'>
-          <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+          <img className='w-40' src="/logo.webp" alt="" />
           <Link to='/users/logout' className='home bg-white p-2 rounded-full'>
             <BiLogOut size={25} />
           </Link>
         </div>
-        <div className='h-3/5 '>
-          {/* <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" /> */}
+        <div className='h-1/2'>
           <LiveTracking />
         </div>
-        <div className='h-screen absolute top-0 w-full flex flex-col justify-end '>
-          <div className='bg-white p-5 flex flex-col gap-5 relative h-[40%] rounded-t-xl'>
+        {/* Search */}
+        <div 
+          ref={searchRef} 
+          className='search h-3/7 absolute bottom-0 w-full flex flex-col justify-end '
+        >
+          <div className='bg-white p-5 flex flex-col gap-5 relative'>
             <div className='flex justify-between items-center'>
               <h1 className='text-2xl font-semibold'>Find a trip</h1>
               <IoIosArrowUp
@@ -279,10 +278,9 @@ const UserHome = () => {
             <form onSubmit={(e) => {
               submitHandler(e)
             }} className='flex flex-col gap-5'>
-              <div className="line bg-neutral-500 h-20 w-[3px] rounded-full absolute left-10 bottom-24"></div>
+              <div className="line bg-neutral-500 h-20 w-[3px] rounded-full absolute left-10 bottom-28"></div>
               <input
                 value={pickup}
-
                 onClick={() => {
                   setLocationPanel(true)
                   setLocationPanelArrow(true)
@@ -306,7 +304,7 @@ const UserHome = () => {
             </form>
             <button
               onClick={findRide}
-              disabled={!pickup || !destination} // Disable button if either input is empty
+              disabled={!pickup || !destination}
               className={`text-white flex justify-center items-center py-3 rounded-lg text-xl ${!pickup || !destination ? 'bg-neutral-500 cursor-not-allowed' : 'bg-black'
                 }`}>
               Find Ride
@@ -318,7 +316,6 @@ const UserHome = () => {
               setPickup={setPickup}
               setDestination={setDestination}
               activeField={activeField}
-
             />
           </div>
         </div>
@@ -330,7 +327,7 @@ const UserHome = () => {
             vehiclePanel={vehiclePanel}
             setVehiclePanel={setVehiclePanel}
             setConfirmRide={setConfirmRide}
-            setVehicleImage={setVehicleImage} // Pass the setter function
+            setVehicleImage={setVehicleImage}
           />
         </div>
 
@@ -344,9 +341,8 @@ const UserHome = () => {
             confirmRide={confirmRide}
             setConfirmRide={setConfirmRide}
             setVehicleFound={setVehicleFound}
-            vehicleImage={vehicleImage} // Pass the image as a prop
+            vehicleImage={vehicleImage}
           />
-
         </div>
         <div ref={vehicleFoundRef} className='w-full fixed z-10 bottom-0 rounded-lg translate-y-full bg-white py-5 h-fit'>
           <LookingForDriver
@@ -357,7 +353,7 @@ const UserHome = () => {
             vehicleType={vehicleType}
             vehicleFound={vehicleFound}
             setVehicleFound={setVehicleFound}
-            vehicleImage={vehicleImage} // Pass the image as a prop
+            vehicleImage={vehicleImage}
           />
         </div>
         <div ref={waitingForDriverRef} className='w-full fixed z-10 bottom-0 rounded-lg translate-y-full  bg-white py-5 h-fit'>
@@ -366,11 +362,9 @@ const UserHome = () => {
             setVehicleFound={setVehicleFound}
             setWaitingForDriver={setWaitingForDriver}
             waitingForDriver={waitingForDriver}
-            vehicleImage={vehicleImage} // Pass the image as a prop
+            vehicleImage={vehicleImage}
           />
         </div>
-
-
       </div>
     </div>
   )

@@ -38,7 +38,7 @@ const CaptainRiding = () => {
     return (
         <div className='relative h-screen flex flex-col'>
             <div className='flex justify-between items-center'>
-                <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+                <img className='w-40' src="/logo.webp" alt="" />
                 <Link to='/captains/login' className='home bg-white p-2 rounded-full'>
                     <BiLogOut size={25} />
                 </Link>
@@ -49,9 +49,11 @@ const CaptainRiding = () => {
             </div>
 
 
-            <div onClick={() => {
+            <div 
+            onClick={() => {
                 setFinishRidePanel(true)
-            }} className='py-5 flex flex-col justify-between items-center bg-yellow-20 h-1/5'>
+            }} 
+            className='py-5 flex flex-col justify-between items-center bg-yellow-20 h-1/5'>
                 <IoIosArrowUp
                     className=""
                     size={30}

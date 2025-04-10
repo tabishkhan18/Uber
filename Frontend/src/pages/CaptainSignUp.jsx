@@ -70,7 +70,7 @@ const CaptainSignUp = () => {
     <div className='flex flex-col justify-between h-screen '>
       <div>
         <div className='flex pt-8 w-full justify-between items-center'>
-          <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+          <img className='w-40' src="/logo.webp" alt="" />
           <FaTaxi className='me-5' size={40} />
         </div>
         <form onSubmit={handleSubmit} className='p-5'>

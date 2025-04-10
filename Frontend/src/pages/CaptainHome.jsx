@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import CaptainRidePopup from '../components/CaptainRidePopup';
 import { useGSAP } from '@gsap/react'
@@ -28,7 +28,15 @@ const CaptainHome = () => {
 
   const { socket } = useContext(SocketContext)
   const { captain } = useContext(CaptainDataContext)
+  const location = useLocation()
+  const [success, setSuccess] = useState(location.state?.success || '')
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => setSuccess(''), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   useEffect(() => {
 
@@ -117,8 +125,13 @@ const CaptainHome = () => {
 
   return (
     <div className='relative h-screen flex flex-col'>
+      {success && (
+        <div className="fixed top-2 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50">
+          {success}
+        </div>
+      )}
       <div className='flex justify-between items-center'>
-        <img className='w-40' src="https://static.vecteezy.com/system/resources/previews/027/127/451/non_2x/uber-logo-uber-icon-transparent-free-png.png" alt="" />
+        <img className='w-40' src="/logo.webp" alt="" />
         <Link to='/captains/login' className='home bg-white p-2 rounded-full'>
           <BiLogOut size={25} />
         </Link>
