@@ -10,7 +10,7 @@ const CaptainLogin = () => {
   const { setCaptain } = React.useContext(CaptainDataContext)
   const navigate = useNavigate()
   const [error, setError] = useState('')
-
+  const url = "http://localhost:3000"
   // Clear error popup after 3 seconds
   useEffect(() => {
     if (error) {
@@ -23,7 +23,7 @@ const CaptainLogin = () => {
     e.preventDefault()
     try {
       const captain = { email, password }
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`, captain)
+      const response = await axios.post(`${url}/captains/login`, captain)
       if (response.status === 200) {
         const data = response.data
         setCaptain(data.captain)

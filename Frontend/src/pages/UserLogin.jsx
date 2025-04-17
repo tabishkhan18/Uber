@@ -10,7 +10,7 @@ const UserLogin = () => {
   const { setUser } = useContext(UserDataContext)
   const navigate = useNavigate()
   const [error, setError] = useState('')
-
+  const url = "http://localhost:3000"
   // Clear error popup after 3 seconds
   useEffect(() => {
     if (error) {
@@ -23,7 +23,7 @@ const UserLogin = () => {
     e.preventDefault()
     try {
       const userData = { email, password }
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, userData)
+      const response = await axios.post(`${url}/users/login`, userData)
       if (response.status === 200) {
         const data = response.data
         setUser(data.user)

@@ -13,7 +13,7 @@ const CaptainProtectedWrapper = ({
     const navigate = useNavigate()
     const { captain, setCaptain } = useContext(CaptainDataContext)
     const [isLoading, setIsLoading] = useState(true)
-
+    const url = "http://localhost:3000"
 
     useEffect(() => {
         if (!token) {
@@ -22,7 +22,7 @@ const CaptainProtectedWrapper = ({
         }
 
 
-        axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
+        axios.get(`${url}/captains/profile`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -39,7 +39,7 @@ const CaptainProtectedWrapper = ({
     }, [token])
 
 
-    
+
     if (isLoading) {
         return (
             <div className='flex justify-center items-center h-screen'>

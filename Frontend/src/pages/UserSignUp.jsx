@@ -17,7 +17,7 @@ const UserSignUp = () => {
   const navigate = useNavigate()
 
   const { user, setUser } = useContext(UserDataContext)
-
+  const url = "http://localhost:3000"
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -32,7 +32,7 @@ const UserSignUp = () => {
     }
 
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
+    const response = await axios.post(`${url}/users/register`, newUser)
 
     if (response.status === 201) {
       const data = response.data
