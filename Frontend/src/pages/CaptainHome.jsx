@@ -30,7 +30,7 @@ const CaptainHome = () => {
   const { captain } = useContext(CaptainDataContext)
   const location = useLocation()
   const [success, setSuccess] = useState(location.state?.success || '')
-  const url = "http://localhost:3000"
+  const url = "https://uber-2l9q.onrender.com"
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(''), 3000)

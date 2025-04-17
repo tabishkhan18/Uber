@@ -10,7 +10,7 @@ const CaptainLogin = () => {
   const { setCaptain } = React.useContext(CaptainDataContext)
   const navigate = useNavigate()
   const [error, setError] = useState('')
-  const url = "http://localhost:3000"
+  const url = "https://uber-2l9q.onrender.com"
   // Clear error popup after 3 seconds
   useEffect(() => {
     if (error) {

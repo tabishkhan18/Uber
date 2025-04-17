@@ -10,7 +10,7 @@ const ConfirmRidePopup = (props) => {
     const [otp, setOtp] = useState('')
     const [otpError, setOtpError] = useState('');
     const navigate = useNavigate()
-    const url = "http://localhost:3000"
+    const url = "https://uber-2l9q.onrender.com"
     const submitHandler = async (e) => {
         e.preventDefault()
 

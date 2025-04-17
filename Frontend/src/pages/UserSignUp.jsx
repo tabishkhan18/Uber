@@ -17,7 +17,7 @@ const UserSignUp = () => {
   const navigate = useNavigate()
 
   const { user, setUser } = useContext(UserDataContext)
-  const url = "http://localhost:3000"
+  const url = "https://uber-2l9q.onrender.com"
 
   const handleSubmit = async (e) => {
     e.preventDefault()

@@ -6,7 +6,7 @@ const CaptainLogout = () => {
 
     const token = localStorage.getItem('token')
     const navigate = useNavigate()
-    const url = "http://localhost:3000"
+    const url = "https://uber-2l9q.onrender.com"
     axios.get(`${url}/captains/logout`, {
         headers: { 
             Authorization: `Bearer ${token}` 

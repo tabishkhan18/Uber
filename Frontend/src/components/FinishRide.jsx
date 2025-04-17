@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 const FinishRide = (props) => {
 
     const navigate = useNavigate()
-    const url = "http://localhost:3000"
+    const url = "https://uber-2l9q.onrender.com"
     async function endRide() {
         const response = await axios.post(`${url}/rides/end-ride`, {
 

@@ -26,7 +26,7 @@ const CaptainSignUp = () => {
   const [captainData, setCaptainData] = useState({})
 
   const { captain, setCaptain } = React.useContext(CaptainDataContext)
-  const url = "http://localhost:3000"
+  const url = "https://uber-2l9q.onrender.com"
 
   const handleSubmit = async (e) => {
     e.preventDefault()

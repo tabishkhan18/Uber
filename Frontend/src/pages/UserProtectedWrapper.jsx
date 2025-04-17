@@ -12,7 +12,7 @@ const UserProtectedWrapper = ({
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserDataContext)
   const [isLoading, setIsLoading] = useState(true)
-  const url = "http://localhost:3000"
+  const url = "https://uber-2l9q.onrender.com"
 
   useEffect(() => {
     if (!token) {

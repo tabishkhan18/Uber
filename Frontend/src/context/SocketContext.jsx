@@ -2,7 +2,7 @@ import React, { createContext, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 export const  SocketContext = createContext();
-const url = "http://localhost:3000"
+const url = "https://uber-2l9q.onrender.com"
 const socket = io(`${url}`);
 const SocketProvider = ({ children }) => {
     useEffect(() => {
