@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { LoadScript, GoogleMap } from '@react-google-maps/api';
+import { CaptainDataContext } from '../context/CaptainContext';
 
 // ✅ Declare libraries array outside the component to avoid re-renders
 const libraries = ['marker'];
@@ -9,16 +10,23 @@ const containerStyle = {
   height: '100%',
 };
 
-const center = {
-  lat: -3.745,
-  lng: -38.523
+// Remove the hard-coded center. Instead, we compute the default center from captain data.
+const fallbackCenter = {
+  lat: 26.8467,
+  lng: 80.9462,
 };
 
-// ✅ Add your actual MAP ID here
-const MAP_ID = import.meta.env.VITE_GOOGLE_MAP_ID; // e.g., 'YOUR_GOOGLE_MAP_ID'
+// ✅ Use your actual MAP ID here; if it's a GOOGLE_MAPS_API_KEY, consider renaming appropriately.
+const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; 
 
 const LiveTracking = () => {
-  const [currentPosition, setCurrentPosition] = useState(center);
+  const { captain } = useContext(CaptainDataContext);
+  const defaultCenter =
+    captain && captain.location
+      ? { lat: captain.location.ltd, lng: captain.location.lng }
+      : fallbackCenter;
+
+  const [currentPosition, setCurrentPosition] = useState(defaultCenter);
   const mapRef = useRef(null);
   const markerRef = useRef(null);
 
@@ -79,7 +87,7 @@ const LiveTracking = () => {
         zoom={15}
         onLoad={handleMapLoad}
         options={{
-          mapId: MAP_ID, // ✅ Must be valid for AdvancedMarkerElement
+          mapId: MAP_ID, // ✅ Must be valid if using AdvancedMarkerElement
         }}
       />
     </LoadScript>
