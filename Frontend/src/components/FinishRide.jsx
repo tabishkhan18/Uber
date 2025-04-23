@@ -9,9 +9,8 @@ import { useNavigate } from 'react-router-dom'
 const FinishRide = (props) => {
 
     const navigate = useNavigate()
-    const url = "https://uber-2l9q.onrender.com"
     async function endRide() {
-        const response = await axios.post(`${url}/rides/end-ride`, {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
 
             rideId: props.ride._id
 

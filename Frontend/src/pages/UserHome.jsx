@@ -46,7 +46,6 @@ const UserHome = () => {
 
   // Set success message if passed in location state
   const [success, setSuccess] = useState(location.state?.success || '')
-  const url = "https://uber-2l9q.onrender.com"
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(''), 3000)
@@ -79,7 +78,7 @@ const UserHome = () => {
 
     debounceTimer.current = setTimeout(async () => {
       try {
-        const response = await fetch(`${url}/maps/get-suggestions`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -108,7 +107,7 @@ const UserHome = () => {
 
     debounceTimer.current = setTimeout(async () => {
       try {
-        const response = await fetch(`${url}/maps/get-suggestions`, {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -219,7 +218,7 @@ const UserHome = () => {
     setLocationPanel(false);
     setLocationPanelArrow(false)
 
-    const response = await axios.get(`${url}/rides/get-fare`, {
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
       params: { pickup, destination },
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -230,7 +229,7 @@ const UserHome = () => {
   }
 
   const createRide = async () => {
-    const response = await axios.post(`${url}/rides/create`, {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
       pickup,
       destination,
       vehicleType

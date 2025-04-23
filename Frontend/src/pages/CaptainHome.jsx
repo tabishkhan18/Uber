@@ -30,7 +30,6 @@ const CaptainHome = () => {
   const { captain } = useContext(CaptainDataContext)
   const location = useLocation()
   const [success, setSuccess] = useState(location.state?.success || '')
-  const url = "https://uber-2l9q.onrender.com"
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(''), 3000)
@@ -76,7 +75,7 @@ const CaptainHome = () => {
 
   async function confirmRide() {
 
-    const response = await axios.post(`${url}/rides/confirm`, {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
       rideId: ride._id,
       captainId: captain._id,
 

@@ -17,7 +17,6 @@ const UserSignUp = () => {
   const navigate = useNavigate()
 
   const { user, setUser } = useContext(UserDataContext)
-  const url = "https://uber-2l9q.onrender.com"
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -32,7 +31,7 @@ const UserSignUp = () => {
     }
 
 
-    const response = await axios.post(`${url}/users/register`, newUser)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
 
     if (response.status === 201) {
       const data = response.data

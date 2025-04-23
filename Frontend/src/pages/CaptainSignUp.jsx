@@ -26,7 +26,6 @@ const CaptainSignUp = () => {
   const [captainData, setCaptainData] = useState({})
 
   const { captain, setCaptain } = React.useContext(CaptainDataContext)
-  const url = "https://uber-2l9q.onrender.com"
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -46,7 +45,7 @@ const CaptainSignUp = () => {
         }
       }
     
-    const response = await axios.post(`${url}/captains/register`, captainData)
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
 
     if (response.status === 201) {
       const data = response.data

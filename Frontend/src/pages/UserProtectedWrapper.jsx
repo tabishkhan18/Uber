@@ -12,14 +12,13 @@ const UserProtectedWrapper = ({
   const navigate = useNavigate()
   const { user, setUser } = useContext(UserDataContext)
   const [isLoading, setIsLoading] = useState(true)
-  const url = "https://uber-2l9q.onrender.com"
 
   useEffect(() => {
     if (!token) {
       navigate('/users/login')
     }
 
-    axios.get(`${url}/users/profile`, {
+    axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

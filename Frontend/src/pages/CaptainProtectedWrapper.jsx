@@ -13,7 +13,6 @@ const CaptainProtectedWrapper = ({
     const navigate = useNavigate()
     const { captain, setCaptain } = useContext(CaptainDataContext)
     const [isLoading, setIsLoading] = useState(true)
-    const url = "https://uber-2l9q.onrender.com"
 
     useEffect(() => {
         if (!token) {
@@ -22,7 +21,7 @@ const CaptainProtectedWrapper = ({
         }
 
 
-        axios.get(`${url}/captains/profile`, {
+        axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
